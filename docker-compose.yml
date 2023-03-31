@@ -2,8 +2,8 @@ version: "3.9"
 
 networks:
   nktc_stu:
-    external:
-      name: nktc_stu
+    external: true
+
 
 volumes:
   postgres-data:
@@ -28,7 +28,7 @@ services:
     env_file:
       - .env
     ports:
-      - "172.20.0.50:5432:5432"
+      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./postgresql/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
@@ -99,8 +99,8 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     command: server --console-address ":9001" /data
     ports:
-      - "172.20.0.100:9000:9000"
-      - "172.20.0.100:9001:9001"
+      - "9000:9000"
+      - "9001:9001"
     healthcheck:
       test:
         [
@@ -118,6 +118,7 @@ services:
 
   jenkins:
     image: jenkins/jenkins:lts-jdk11
+    container_name: jenkins
     user: root
     restart: always
     ports:
