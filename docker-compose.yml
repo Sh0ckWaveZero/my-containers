@@ -4,14 +4,6 @@ networks:
   nktc_stu:
     external: true
 
-
-volumes:
-  postgres-data:
-  pgadmin-data:
-  minio_storage:
-  jenkins_home:
-
-
 services:
   postgres:
     image: postgres:alpine
@@ -30,8 +22,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./postgresql/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -136,3 +129,8 @@ services:
       retries: 3
     networks:
       - nktc_stu
+volumes:
+  postgres_data:
+  pgadmin_data:
+  minio_storage:
+  jenkins_home:
