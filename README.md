@@ -6,7 +6,7 @@ docker network create --subnet=172.20.0.0/16 nktc_stu
 
 ```
 
-Create 
+Create volume
 
 ```bash
 docker volume create postgres_data
