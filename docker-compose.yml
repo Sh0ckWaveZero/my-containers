@@ -71,7 +71,7 @@ services:
           "CMD",
           "curl",
           "-f",
-          "http://localhost:9000/api/status"
+          "http://localhost:9100/api/status"
         ]
       interval: 1m30s
       timeout: 10s
