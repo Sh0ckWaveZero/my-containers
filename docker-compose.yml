@@ -106,6 +106,7 @@ services:
   jenkins:
     image: jenkins/jenkins:lts-jdk11
     container_name: jenkins
+    privileged: true
     user: root
     restart: always
     ports:
