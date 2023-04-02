@@ -33,9 +33,7 @@ services:
     networks:
       nktc_stu:
         ipv4_address: 172.20.0.50
-    networks:
-      - nktc_stu
-
+        
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
