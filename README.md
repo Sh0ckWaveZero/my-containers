@@ -1,7 +1,10 @@
 Create networks
 
 ```bash
-docker network create --subnet=172.20.0.0/16 nktc_stu
+docker network create \
+  --subnet=172.20.0.0/16 \
+  --gateway=172.20.0.1 \
+  nktc_stu
 
 
 ```
