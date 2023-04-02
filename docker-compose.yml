@@ -23,7 +23,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
+#       - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
 #     command: postgres -c config_file=/etc/postgresql/postgresql.conf
 #     healthcheck:
 #       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -31,8 +31,8 @@ services:
 #       timeout: 5s
 #       retries: 5
     networks:
-      nktc_stu:
-        ipv4_address: 172.20.0.50
+      - nktc_stu
+#         ipv4_address: 172.20.0.50
 
   pgadmin:
     container_name: pgadmin
