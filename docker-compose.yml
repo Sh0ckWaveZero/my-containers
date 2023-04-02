@@ -31,8 +31,8 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      nktc_stu:
-        ipv4_address: 172.20.0.50
+      - nktc_stu
+#         ipv4_address: 172.20.0.50
 
   pgadmin:
     container_name: pgadmin
