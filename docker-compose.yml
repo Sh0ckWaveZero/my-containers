@@ -118,7 +118,6 @@ services:
       - "/usr/local/bin/docker:/usr/local/bin/docker"
     environment:
       TZ: "Asia/Bangkok"
-      JAVA_OPTS: "-Dhttp.proxyHost=localhost -Dhttp.proxyPort=8080 -Dhttps.proxyHost=localhost -Dhttps.proxyPort=8080"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/login" ]
       interval: 1m30s
