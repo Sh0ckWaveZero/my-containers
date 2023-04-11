@@ -5,6 +5,16 @@ networks:
     external: true
 
 services:
+  cloudflaretunnel:
+    container_name: cloudflaretunnel-demo-1
+    image: cloudflare/cloudflared:2023.2.1
+    restart: unless-stopped
+    environment:
+      - TUNNEL_TOKEN=$TUNNEL_TOKEN
+    command: tunnel --no-autoupdate run
+    networks:
+      - nktc_stu
+      
   postgres:
     image: postgres:alpine
     container_name: postgres
