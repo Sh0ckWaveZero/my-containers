@@ -22,5 +22,5 @@ docker volume create jenkins_hom
 Load the tunnel token into the environment variable on your server by executing:
 
 ```sh
-export TUNNEL_TUKEN=xxxxx
+export TUNNEL_TOKEN=xxxxx
 ```
