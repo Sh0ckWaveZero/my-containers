@@ -5,15 +5,15 @@ networks:
     external: true
 
 services:
-  cloudflaretunnel:
-    container_name: cloudflared
-    image: cloudflare/cloudflared:2023.4.1
-    restart: unless-stopped
-    environment:
-      - TUNNEL_TOKEN=$TUNNEL_TOKEN
-    command: tunnel --no-autoupdate run
-    networks:
-      - nktc_stu
+#   cloudflaretunnel:
+#     container_name: cloudflared
+#     image: cloudflare/cloudflared:2023.4.1
+#     restart: unless-stopped
+#     environment:
+#       - TUNNEL_TOKEN=$TUNNEL_TOKEN
+#     command: tunnel --no-autoupdate run
+#     networks:
+#       - nktc_stu
       
   postgres:
     image: postgres:alpine
