@@ -5,16 +5,16 @@ networks:
     external: true
 
 services:
-#   cloudflaretunnel:
-#     container_name: cloudflared
-#     image: cloudflare/cloudflared:2023.4.1
-#     restart: unless-stopped
-#     environment:
-#       - TUNNEL_TOKEN=$TUNNEL_TOKEN
-#     command: tunnel --no-autoupdate run
-#     networks:
-#       - nktc_stu
-      
+  #   cloudflaretunnel:
+  #     container_name: cloudflared
+  #     image: cloudflare/cloudflared:2023.4.1
+  #     restart: unless-stopped
+  #     environment:
+  #       - TUNNEL_TOKEN=$TUNNEL_TOKEN
+  #     command: tunnel --no-autoupdate run
+  #     networks:
+  #       - nktc_stu
+
   postgres:
     image: postgres:alpine
     container_name: postgres
@@ -33,8 +33,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-#       - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
-#     command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    #       - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
+    #     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -43,7 +43,7 @@ services:
     networks:
       nktc_stu:
         ipv4_address: 172.20.0.50
-        
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -135,21 +135,21 @@ services:
       retries: 3
     networks:
       - nktc_stu
-      
- agent:
+
+  agent:
     image: jenkins/ssh-agent:jdk11
     privileged: true
     user: root
     container_name: agent
     expose:
-      - '4422:22'
+      - "4422:22"
     env_file:
       - .env
     environment:
-      - JENKINS_AGENT_SSH_PUBKEY=${JENKINS_AGENT_SSH_PUBKEY}
+      JENKINS_AGENT_SSH_PUBKEY: ${JENKINS_AGENT_SSH_PUBKEY}
     networks:
       - nktc_stu
-      
+
 volumes:
   postgres_data:
   pgadmin_data:
