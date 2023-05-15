@@ -149,9 +149,22 @@ services:
       JENKINS_AGENT_SSH_PUBKEY: ${JENKINS_AGENT_SSH_PUBKEY}
     networks:
       - nktc_stu
+  
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - "4000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - nktc_stu
 
 volumes:
   postgres_data:
   pgadmin_data:
   minio_storage:
   jenkins_home:
+  grafana-data:
+    driver: local
