@@ -143,22 +143,10 @@ services:
       JENKINS_AGENT_SSH_PUBKEY: ${JENKINS_AGENT_SSH_PUBKEY}
     networks:
       - nktc_stu
-
-  grafana:
-    image: grafana/grafana-oss:latest
-    container_name: grafana
-    ports:
-      - '4000:3000'
-    volumes:
-      - grafana-data:/var/lib/grafana
-    depends_on:
-      - influxdb
-    restart: unless-stopped
-    networks:
-      - nktc_stu
-
+      
   influxdb:
     image: influxdb:latest
+    container_name: grafana
     ports:
       - '8086:8086'
     volumes:
@@ -172,6 +160,19 @@ services:
     networks:
       - nktc_stu
 
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - '4000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    networks:
+      - nktc_stu
+      
 volumes:
   postgres_data:
   pgadmin_data:
