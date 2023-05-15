@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 networks:
   nktc_stu:
@@ -26,17 +26,17 @@ services:
     logging:
       options:
         max-size: 10m
-        max-file: "3"
+        max-file: '3'
     env_file:
       - .env
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     #       - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
     #     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -55,7 +55,7 @@ services:
     env_file:
       - .env
     ports:
-      - "5050:80"
+      - '5050:80'
     depends_on:
       - postgres
     volumes:
@@ -68,7 +68,7 @@ services:
     container_name: potainer
     privileged: true
     ports:
-      - "9100:9000"
+      - '9100:9000'
     volumes:
       - ./data:/data
       - /var/run/docker.sock:/var/run/docker.sock
@@ -76,7 +76,7 @@ services:
     environment:
       - TZ=Asia/Bangkok
     healthcheck:
-      test: "wget --no-verbose --tries=1 --spider http://localhost:9100 || exit 1"
+      test: 'wget --no-verbose --tries=1 --spider http://localhost:9100 || exit 1'
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -96,16 +96,10 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     command: server --console-address ":9001" /data
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - '9000:9000'
+      - '9001:9001'
     healthcheck:
-      test:
-        [
-          "CMD",
-          "curl",
-          "-f",
-          "http://localhost:9000/minio/health/live"
-        ]
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
       interval: 30s
       timeout: 20s
       retries: 3
@@ -120,16 +114,16 @@ services:
     user: root
     restart: always
     ports:
-      - "8080:8080"
-      - "50000:50000"
+      - '8080:8080'
+      - '50000:50000'
     volumes:
-      - "jenkins_home:/var/jenkins_home"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "/usr/local/bin/docker:/usr/local/bin/docker"
+      - 'jenkins_home:/var/jenkins_home'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/usr/local/bin/docker:/usr/local/bin/docker'
     environment:
-      TZ: "Asia/Bangkok"
+      TZ: 'Asia/Bangkok'
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/login" ]
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/login']
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -142,22 +136,37 @@ services:
     user: root
     container_name: agent
     expose:
-      - "4422:22"
+      - '4422:22'
     env_file:
       - .env
     environment:
       JENKINS_AGENT_SSH_PUBKEY: ${JENKINS_AGENT_SSH_PUBKEY}
     networks:
       - nktc_stu
-  
+
   grafana:
     image: grafana/grafana-oss:latest
     container_name: grafana
     ports:
-      - "4000:3000"
+      - '4000:3000'
     volumes:
       - grafana-data:/var/lib/grafana
     restart: unless-stopped
+    networks:
+      - nktc_stu
+
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    env_file:
+      - .env
+    environment:
+      INFLUXDB_DB: ${INFLUXDB_DB}
+      INFLUXDB_ADMIN_USER: ${INFLUXDB_USERNAME}
+      INFLUXDB_ADMIN_PASSWORD: ${INFLUXDB_PASSWORD}
     networks:
       - nktc_stu
 
@@ -166,5 +175,6 @@ volumes:
   pgadmin_data:
   minio_storage:
   jenkins_home:
+  influxdb-storage:
   grafana-data:
     driver: local
